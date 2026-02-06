@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Berbagi Lokasi</title>
+  <title>Bagikan Lokasi</title>
 </head>
 <body>
   <h2>Bagikan Lokasi Kamu</h2>
-  <button onclick="getLocation()">Kirim Lokasi</button>
-
+  <button onclick="getLocation()">Bagikan Lokasi</button>
   <p id="hasil"></p>
 
   <script>
@@ -14,14 +13,15 @@
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
       } else {
-        document.getElementById("hasil").innerHTML = "HP tidak mendukung lokasi";
+        document.getElementById("hasil").innerHTML = "Browser tidak mendukung lokasi";
       }
     }
 
     function showPosition(position) {
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;
       document.getElementById("hasil").innerHTML =
-      "Latitude: " + position.coords.latitude +
-      "<br>Longitude: " + position.coords.longitude;
+        "Lokasi: <a href='https://www.google.com/maps?q=" + lat + "," + lon + "' target='_blank'>Lihat di Maps</a>";
     }
   </script>
 </body>
