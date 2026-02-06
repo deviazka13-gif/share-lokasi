@@ -1,69 +1,28 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Share Lokasi</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Leaflet -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <style>
-    body { font-family: Arial; margin: 0; padding: 10px; }
-    button {
-      width: 100%;
-      padding: 15px;
-      font-size: 16px;
-      background: #2ecc71;
-      border: none;
-      color: white;
-      border-radius: 8px;
-    }
-    #map { height: 400px; margin-top: 10px; }
-  </style>
+  <title>Berbagi Lokasi</title>
 </head>
 <body>
+  <h2>Bagikan Lokasi Kamu</h2>
+  <button onclick="getLocation()">Kirim Lokasi</button>
 
-<h3>Bagikan Lokasi Kamu</h3>
-<button onclick="getLocation()">Izinkan & Tampilkan Lokasi</button>
+  <p id="hasil"></p>
 
-<div id="map"></div>
+  <script>
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        document.getElementById("hasil").innerHTML = "HP tidak mendukung lokasi";
+      }
+    }
 
-<script>
-let map;
-
-function getLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(showMap, error);
-  } else {
-    alert("GPS tidak didukung");
-  }
-}
-
-function showMap(pos) {
-  const lat = pos.coords.latitude;
-  const lon = pos.coords.longitude;
-
-  if (!map) {
-    map = L.map('map').setView([lat, lon], 16);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap'
-    }).addTo(map);
-  }
-
-  L.marker([lat, lon]).addTo(map)
-    .bindPopup("Lokasi kamu")
-    .openPopup();
-}
-
-function error() {
-  alert("Izin lokasi ditolak");
-}
-</script>
-
+    function showPosition(position) {
+      document.getElementById("hasil").innerHTML =
+      "Latitude: " + position.coords.latitude +
+      "<br>Longitude: " + position.coords.longitude;
+    }
+  </script>
 </body>
 </html>
